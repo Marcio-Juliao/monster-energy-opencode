@@ -2,10 +2,13 @@ import { useState } from 'react'
 import type { SortOption } from '@/types'
 import { PRODUCTS, CATEGORIES } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
+import { useParallax } from '@/hooks/useParallax'
 
 export default function ShopPage() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [sortBy, setSortBy] = useState<SortOption>('default')
+  const [filterKey, setFilterKey] = useState(0)
+  const parallaxOffset = useParallax(0.2)
 
   let filtered = activeCategory === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory)
   if (sortBy === 'price-asc') filtered = [...filtered].sort((a, b) => a.price - b.price)
@@ -23,6 +26,11 @@ export default function ShopPage() {
     reserve: '#FFAB40',
   }
 
+  const handleCategoryChange = (cat: string) => {
+    setActiveCategory(cat)
+    setFilterKey((k) => k + 1)
+  }
+
   return (
     <div className="pt-14 min-h-screen">
       <div
@@ -30,14 +38,24 @@ export default function ShopPage() {
         style={{ background: 'var(--secondary)', borderBottom: '1px solid var(--border)' }}
       >
         <div
-          className="absolute right-0 top-0 bottom-0 opacity-5 pointer-events-none select-none"
+          className="absolute right-0 top-0 bottom-0 opacity-5 pointer-events-none select-none animate-float-slow"
           style={{ fontFamily: 'var(--font-display)', fontSize: '28rem', lineHeight: 1, color: 'var(--primary)' }}
         >
           M
         </div>
-        <div className="max-w-7xl mx-auto">
-          <p style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }} className="text-xs tracking-[0.3em] mb-3 uppercase">ENERGY DRINKS</p>
-          <h1 style={{ fontFamily: 'var(--font-display)' }} className="text-6xl md:text-8xl uppercase text-white leading-none">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <p
+            style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }}
+            className="text-xs tracking-[0.3em] mb-3 uppercase"
+            style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)', animation: 'reveal-up 0.6s ease-out 0.1s both' }}
+          >
+            ENERGY DRINKS
+          </p>
+          <h1
+            style={{ fontFamily: 'var(--font-display)' }}
+            className="text-6xl md:text-8xl uppercase text-white leading-none"
+            style={{ fontFamily: 'var(--font-display)', animation: 'reveal-up 0.6s ease-out 0.2s both' }}
+          >
             THE VAULT
           </h1>
         </div>
@@ -46,10 +64,10 @@ export default function ShopPage() {
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="flex flex-wrap items-center justify-between gap-4 mb-10 pb-6" style={{ borderBottom: '1px solid var(--border)' }}>
           <div className="flex flex-wrap gap-2">
-            {CATEGORIES.map((cat) => (
+            {CATEGORIES.map((cat, i) => (
               <button
                 key={cat}
-                onClick={() => setActiveCategory(cat)}
+                onClick={() => handleCategoryChange(cat)}
                 style={{
                   fontFamily: 'var(--font-condensed)',
                   background: activeCategory === cat ? categoryColors[cat] : 'transparent',
@@ -57,8 +75,11 @@ export default function ShopPage() {
                   color: activeCategory === cat
                     ? (cat === 'ultra' || cat === 'zero' || cat === 'rehab' ? '#000' : '#fff')
                     : 'var(--muted-foreground)',
+                  animation: `reveal-up 0.4s ease-out ${i * 0.05}s both`,
                 }}
-                className="px-4 py-1.5 text-xs font-700 tracking-widest uppercase transition-colors border hover:text-white hover:border-white"
+                className={`filter-pill px-4 py-1.5 text-xs font-700 tracking-widest uppercase transition-all duration-300 border hover:text-white hover:border-white ${
+                  activeCategory === cat ? 'active' : ''
+                }`}
               >
                 {cat}
               </button>
@@ -70,7 +91,7 @@ export default function ShopPage() {
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortOption)}
               style={{ fontFamily: 'var(--font-condensed)', background: 'var(--secondary)', borderColor: 'var(--border)' }}
-              className="text-xs font-700 tracking-wider text-white border px-3 py-1.5 focus:outline-none focus:border-[var(--primary)]"
+              className="text-xs font-700 tracking-wider text-white border px-3 py-1.5 focus:outline-none focus:border-[var(--primary)] transition-colors"
             >
               <option value="default">FEATURED</option>
               <option value="price-asc">PRICE: LOW→HIGH</option>
@@ -84,16 +105,16 @@ export default function ShopPage() {
           {filtered.length} PRODUCTS
         </p>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[var(--border)]">
-          {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} onClick={() => {}} />
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[var(--border)]" key={filterKey}>
+          {filtered.map((p, i) => (
+            <ProductCard key={p.id} product={p} onClick={() => {}} index={i} />
           ))}
         </div>
 
         <div className="mt-16 text-center">
           <button
             style={{ fontFamily: 'var(--font-condensed)', borderColor: 'var(--border)' }}
-            className="px-12 py-4 border text-sm font-700 tracking-widest text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors uppercase"
+            className="px-12 py-4 border text-sm font-700 tracking-widest text-[var(--muted-foreground)] hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300 uppercase hover:shadow-[0_0_20px_rgba(57,255,20,0.15)]"
           >
             LOAD MORE
           </button>

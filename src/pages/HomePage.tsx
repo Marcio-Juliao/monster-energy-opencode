@@ -3,25 +3,55 @@ import { PRODUCTS } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import Footer from '@/components/Footer'
 import CaffeineComparison from '@/components/CaffeineComparison'
+import ParticleField from '@/components/ParticleField'
+import GlitchText from '@/components/GlitchText'
+import { useParallax } from '@/hooks/useParallax'
+import { useInView } from '@/hooks/useInView'
+
+function AnimatedCounter({ value, label }: { value: string; label: string }) {
+  const { ref, inView } = useInView(0.3)
+  return (
+    <div ref={ref} className={`px-6 first:pl-4 transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+      <div style={{ fontFamily: 'var(--font-display)', color: 'var(--primary)' }} className="text-3xl counter-shimmer">{value}</div>
+      <div style={{ fontFamily: 'var(--font-condensed)' }} className="text-xs tracking-widest text-[var(--muted-foreground)] mt-1">{label}</div>
+    </div>
+  )
+}
 
 export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
   const featured = PRODUCTS.filter(p => p.tag !== null).slice(0, 4)
+  const parallaxOffset = useParallax(0.3)
+  const { ref: featuredRef, inView: featuredInView } = useInView(0.1)
+  const { ref: bannerRef, inView: bannerInView } = useInView(0.2)
+  const { ref: communityRef, inView: communityInView } = useInView(0.1)
 
   return (
     <div className="pt-14">
       {/* Hero */}
       <section className="relative min-h-[92vh] flex items-end overflow-hidden">
+        {/* Parallax background */}
         <div
           className="absolute inset-0 bg-center bg-cover"
           style={{
             backgroundImage: `url(https://images.unsplash.com/photo-1622543925917-763c34d1a86e?w=1800&h=1200&fit=crop&auto=format)`,
             backgroundColor: '#0a0a0a',
+            transform: `translateY(${parallaxOffset * 0.5}px)`,
+            willChange: 'transform',
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/60 to-[#080808]/20" />
+
+        {/* Floating particles */}
+        <ParticleField count={30} />
+
+        {/* Neon line */}
         <div
           className="absolute left-0 right-0 h-px opacity-60"
-          style={{ top: '40%', background: 'linear-gradient(90deg, transparent, var(--primary), transparent)' }}
+          style={{
+            top: '40%',
+            background: 'linear-gradient(90deg, transparent, var(--primary), transparent)',
+            animation: 'glow-pulse 3s ease-in-out infinite',
+          }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-16 w-full">
@@ -29,40 +59,43 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
             <p
               style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }}
               className="text-sm font-700 tracking-[0.3em] mb-4 uppercase"
+              style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)', animation: 'reveal-up 0.8s ease-out 0.2s both' }}
             >
               NEW SEASON DROP
             </p>
             <h1
               style={{ fontFamily: 'var(--font-display)', lineHeight: 0.9 }}
               className="text-[clamp(4rem,14vw,11rem)] uppercase text-white mb-6 leading-none"
+              style={{ fontFamily: 'var(--font-display)', lineHeight: 0.9, animation: 'reveal-up 0.8s ease-out 0.4s both' }}
             >
-              UNLEASH<br />
-              <span style={{ color: 'var(--primary)', WebkitTextStroke: '2px var(--primary)' }}>
+              <GlitchText text="UNLEASH" className="block" /><br />
+              <span className="text-stroke" style={{ color: 'var(--primary)' }}>
                 THE
               </span>{' '}
-              <span style={{ WebkitTextStroke: '2px white', color: 'transparent' }}>
+              <span className="text-stroke-white">
                 BEAST
               </span>
             </h1>
             <p
               style={{ fontFamily: 'var(--font-condensed)' }}
               className="text-lg text-[var(--muted-foreground)] font-400 max-w-md mb-8 tracking-wide leading-relaxed"
+              style={{ fontFamily: 'var(--font-condensed)', animation: 'reveal-up 0.8s ease-out 0.6s both' }}
             >
               Official Monster Energy drinks. Built for those who push the limit.
               No apologies. No limits.
             </p>
-            <div className="flex flex-wrap gap-4 items-center">
+            <div className="flex flex-wrap gap-4 items-center" style={{ animation: 'reveal-up 0.8s ease-out 0.8s both' }}>
               <button
                 onClick={() => setPage('shop')}
                 style={{ fontFamily: 'var(--font-condensed)' }}
-                className="px-8 py-3.5 bg-[var(--primary)] text-[var(--primary-foreground)] text-base font-700 tracking-[0.2em] uppercase hover:bg-white transition-colors"
+                className="px-8 py-3.5 bg-[var(--primary)] text-[var(--primary-foreground)] text-base font-700 tracking-[0.2em] uppercase hover:bg-white transition-all duration-300 hover:shadow-[0_0_30px_rgba(57,255,20,0.4)]"
               >
                 SHOP DRINKS
               </button>
               <button
                 onClick={() => setPage('story')}
                 style={{ fontFamily: 'var(--font-condensed)', borderColor: 'rgba(255,255,255,0.3)' }}
-                className="px-8 py-3.5 border text-white text-base font-700 tracking-[0.2em] uppercase hover:border-[var(--primary)] hover:text-[var(--primary)] transition-colors"
+                className="px-8 py-3.5 border text-white text-base font-700 tracking-[0.2em] uppercase hover:border-[var(--primary)] hover:text-[var(--primary)] transition-all duration-300 hover:shadow-[0_0_20px_rgba(57,255,20,0.2)]"
               >
                 OUR STORY →
               </button>
@@ -78,10 +111,7 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
               { val: '47', label: 'COUNTRIES' },
               { val: "'02", label: 'EST.' },
             ].map((s) => (
-              <div key={s.label} className="px-6 first:pl-4">
-                <div style={{ fontFamily: 'var(--font-display)', color: 'var(--primary)' }} className="text-3xl">{s.val}</div>
-                <div style={{ fontFamily: 'var(--font-condensed)' }} className="text-xs tracking-widest text-[var(--muted-foreground)] mt-1">{s.label}</div>
-              </div>
+              <AnimatedCounter key={s.label} value={s.val} label={s.label} />
             ))}
           </div>
         </div>
@@ -100,8 +130,8 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
       </div>
 
       {/* Featured Products */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <div className="flex items-end justify-between mb-12">
+      <section ref={featuredRef} className="max-w-7xl mx-auto px-6 py-20">
+        <div className={`flex items-end justify-between mb-12 transition-all duration-700 ${featuredInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div>
             <p style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }} className="text-xs tracking-[0.3em] mb-2 uppercase">JUST DROPPED</p>
             <h2 style={{ fontFamily: 'var(--font-display)' }} className="text-5xl md:text-7xl uppercase text-white leading-none">
@@ -118,21 +148,24 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)]">
-          {featured.map((p) => (
-            <ProductCard key={p.id} product={p} onClick={() => setPage('shop')} />
+          {featured.map((p, i) => (
+            <ProductCard key={p.id} product={p} onClick={() => setPage('shop')} index={i} />
           ))}
         </div>
       </section>
 
       {/* Split banner */}
-      <section className="grid md:grid-cols-2 min-h-[480px]">
+      <section ref={bannerRef} className="grid md:grid-cols-2 min-h-[480px]">
         <div
-          className="relative overflow-hidden flex items-end p-10 min-h-[280px]"
+          className={`relative overflow-hidden flex items-end p-10 min-h-[280px] transition-all duration-700 ${bannerInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
           style={{ background: '#0a0a0a' }}
         >
           <div
             className="absolute inset-0 bg-center bg-cover opacity-40"
-            style={{ backgroundImage: `url(https://images.unsplash.com/photo-1578619918896-128ac25d1a86?w=800&h=600&fit=crop&auto=format)` }}
+            style={{
+              backgroundImage: `url(https://images.unsplash.com/photo-1578619918896-128ac25d1a86?w=800&h=600&fit=crop&auto=format)`,
+              transform: `translateY(${parallaxOffset * 0.2}px)`,
+            }}
           />
           <div className="relative z-10">
             <p style={{ fontFamily: 'var(--font-condensed)', color: '#888' }} className="text-xs tracking-[0.3em] mb-2">ZERO SUGAR LINE</p>
@@ -147,7 +180,7 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
           </div>
         </div>
         <div
-          className="relative overflow-hidden flex items-end p-10 min-h-[280px]"
+          className={`relative overflow-hidden flex items-end p-10 min-h-[280px] transition-all duration-700 delay-200 ${bannerInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}
           style={{ background: 'var(--primary)' }}
         >
           <div className="relative z-10">
@@ -162,7 +195,7 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
             </button>
           </div>
           <div
-            className="absolute right-0 bottom-0 opacity-10"
+            className="absolute right-0 bottom-0 opacity-10 animate-float-slow"
             style={{ fontFamily: 'var(--font-display)', fontSize: '18rem', lineHeight: 1, color: '#080808', pointerEvents: 'none', userSelect: 'none' }}
           >
             M
@@ -181,7 +214,7 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
       </section>
 
       {/* Instagram strip */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
+      <section ref={communityRef} className="max-w-7xl mx-auto px-6 py-20">
         <div className="flex items-center gap-4 mb-10">
           <div style={{ height: 1, background: 'var(--border)', flex: 1 }} />
           <p style={{ fontFamily: 'var(--font-condensed)' }} className="text-xs tracking-[0.3em] text-[var(--muted-foreground)] uppercase">THE COMMUNITY</p>
@@ -194,13 +227,22 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
             'photo-1765519991462-2146c0e180c3',
             'photo-1738087798878-5856145bdf4f',
           ].map((id, i) => (
-            <div key={i} className="relative overflow-hidden aspect-square bg-[var(--muted)] group cursor-pointer">
+            <div
+              key={i}
+              className={`relative overflow-hidden aspect-square bg-[var(--muted)] group cursor-pointer transition-all duration-700 ${
+                communityInView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+              }`}
+              style={{ transitionDelay: `${i * 0.1}s` }}
+            >
               <img
                 src={`https://images.unsplash.com/${id}?w=400&h=400&fit=crop&auto=format`}
                 alt="Community post"
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-[var(--primary)]/0 group-hover:bg-[var(--primary)]/20 transition-colors duration-300" />
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'linear-gradient(135deg, transparent 40%, rgba(57, 255, 20, 0.1) 50%, transparent 60%)', animation: 'shine-sweep 2s ease-in-out infinite' }}
+              />
             </div>
           ))}
         </div>
