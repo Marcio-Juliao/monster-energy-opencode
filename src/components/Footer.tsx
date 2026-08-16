@@ -39,6 +39,13 @@ export default function Footer({ setPage }: { setPage: (p: Page) => void }) {
           </p>
         </div>
 
+        <div style={{ borderTop: '1px solid var(--border)' }} className="pt-6 mb-6">
+          <p style={{ fontFamily: 'var(--font-body)' }} className="text-[10px] text-[#555] tracking-wide leading-relaxed max-w-3xl text-center mx-auto">
+            This site is a college exercise for academic purposes only. Developed with OpenCode using Artificial Intelligence.
+            No commercial validity. This is not an official Monster Energy website.
+          </p>
+        </div>
+
         <div style={{ borderTop: '1px solid var(--border)' }} className="pt-8 flex flex-col md:flex-row items-center justify-between gap-4">
           <p style={{ fontFamily: 'var(--font-condensed)' }} className="text-xs text-[var(--muted-foreground)] tracking-wider">
             &copy; 2026 MONSTER ENERGY COMPANY. ALL RIGHTS RESERVED.
