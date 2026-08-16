@@ -1,0 +1,10 @@
+{
+  "description": "Explore a dynamic Monster Energy-themed website prototype showcasing merchandise and brand-inspired pages for fans and shoppers.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

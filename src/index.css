@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,900;1,700&family=Barlow:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme inline {
+  --color-neon: #39FF14;
+  --color-neon-dim: #32D912;
+  --color-neon-glow: rgba(57, 255, 20, 0.25);
+  --font-display: 'Anton', sans-serif;
+  --font-condensed: 'Barlow Condensed', sans-serif;
+  --font-body: 'Barlow', sans-serif;
+  --background: #080808;
+  --foreground: #f2f2f0;
+  --card: #111111;
+  --card-foreground: #f2f2f0;
+  --primary: #39FF14;
+  --primary-foreground: #080808;
+  --secondary: #181818;
+  --secondary-foreground: #f2f2f0;
+  --muted: #1e1e1e;
+  --muted-foreground: #888882;
+  --accent: #39FF14;
+  --accent-foreground: #080808;
+  --border: #252525;
+  --ring: #39FF14;
+  --radius: 0px;
+}
+
+/* Monster Energy category colors */
+:root {
+  --monster-green: #39FF14;
+  --monster-ultra: #E8E8E8;
+  --monster-zero: #888888;
+  --monster-juice: #E91E63;
+  --monster-rehab: #FFEB3B;
+  --monster-assault: #4A5D23;
+  --monster-reserve: #FFAB40;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #080808;
+  color: #f2f2f0;
+  font-family: 'Barlow', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: #111; }
+::-webkit-scrollbar-thumb { background: #39FF14; }
+
+::selection {
+  background: #39FF14;
+  color: #080808;
+}
