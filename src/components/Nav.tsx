@@ -64,7 +64,7 @@ export default function Nav({ page, setPage }: { page: Page; setPage: (p: Page) 
             style={{ fontFamily: 'var(--font-condensed)' }}
             className="px-5 py-2 bg-[var(--primary)] text-[var(--primary-foreground)] text-sm font-700 tracking-widest hover:bg-white transition-all duration-300 animate-glow-pulse"
           >
-            GET YOUR FIX
+            UNLEASH IT
           </button>
         </div>
 

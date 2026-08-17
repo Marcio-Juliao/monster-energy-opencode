@@ -3,6 +3,9 @@ import { PRODUCTS } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import Footer from '@/components/Footer'
 import CaffeineComparison from '@/components/CaffeineComparison'
+import HowItWorks from '@/components/HowItWorks'
+import Testimonials from '@/components/Testimonials'
+import FAQ from '@/components/FAQ'
 import ParticleField from '@/components/ParticleField'
 import GlitchText from '@/components/GlitchText'
 import { useParallax } from '@/hooks/useParallax'
@@ -154,18 +157,20 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
         </div>
       </section>
 
+      {/* How it works */}
+      <HowItWorks />
+
       {/* Split banner */}
-      <section ref={bannerRef} className="grid md:grid-cols-2 min-h-[480px]">
+      <section ref={bannerRef} className="grid md:grid-cols-2 h-[480px]">
         <div
           className={`relative overflow-hidden flex items-end p-10 min-h-[280px] transition-all duration-700 ${bannerInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}
           style={{ background: '#0a0a0a' }}
         >
-          <div
-            className="absolute inset-0 bg-center bg-cover opacity-40"
-            style={{
-              backgroundImage: `url(https://images.unsplash.com/photo-1578619918896-128ac25d1a86?w=800&h=600&fit=crop&auto=format)`,
-              transform: `translateY(${parallaxOffset * 0.2}px)`,
-            }}
+          <img
+            src="https://www.stack3d.com/cdn-cgi/imagedelivery/VxICvjMM58xBcfP2QqBfuw/e6258780-094d-4851-2ca3-43d69cba4a00/medium"
+            alt="Monster Ultra White"
+            className="absolute inset-0 w-full h-full object-cover opacity-40"
+            style={{ transform: `translateY(${parallaxOffset * 0.2}px)` }}
           />
           <div className="relative z-10">
             <p style={{ fontFamily: 'var(--font-condensed)', color: '#888' }} className="text-xs tracking-[0.3em] mb-2">ZERO SUGAR LINE</p>
@@ -213,6 +218,9 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
         <CaffeineComparison />
       </section>
 
+      {/* Testimonials */}
+      <Testimonials />
+
       {/* Instagram strip */}
       <section ref={communityRef} className="max-w-7xl mx-auto px-6 py-20">
         <div className="flex items-center gap-4 mb-10">
@@ -247,6 +255,9 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
           ))}
         </div>
       </section>
+
+      {/* FAQ */}
+      <FAQ />
 
       <Footer setPage={setPage} />
     </div>

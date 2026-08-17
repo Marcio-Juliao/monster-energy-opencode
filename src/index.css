@@ -48,11 +48,6 @@ body {
   color: #f2f2f0;
   font-family: 'Barlow', sans-serif;
   -webkit-font-smoothing: antialiased;
-  cursor: none;
-}
-
-a, button {
-  cursor: none;
 }
 
 ::-webkit-scrollbar { width: 4px; }
@@ -273,27 +268,6 @@ a, button {
   transition: opacity 0.2s ease-in;
 }
 
-/* Custom cursor glow */
-.cursor-glow {
-  position: fixed;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: rgba(57, 255, 20, 0.15);
-  border: 1px solid rgba(57, 255, 20, 0.4);
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, background 0.2s;
-  mix-blend-mode: screen;
-}
-
-.cursor-glow.hovering {
-  width: 40px;
-  height: 40px;
-  background: rgba(57, 255, 20, 0.25);
-}
-
 /* Card glow border on hover */
 .card-glow-border {
   position: relative;
@@ -407,6 +381,55 @@ a, button {
 
 .filter-pill.active {
   animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Glitch text effect */
+.glitch-text {
+  position: relative;
+  display: inline-block;
+}
+
+.glitch-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 20;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.glitch-layer-1 {
+  color: #39FF14;
+  mix-blend-mode: screen;
+}
+
+.glitch-layer-2 {
+  color: #00e5ff;
+  mix-blend-mode: screen;
+}
+
+/* Glitch active — 3 quick shakes */
+.glitching .glitch-layer-1 {
+  animation: glitch-shift-1 0.3s steps(2) forwards;
+}
+
+.glitching .glitch-layer-2 {
+  animation: glitch-shift-2 0.3s steps(2) forwards;
+}
+
+@keyframes glitch-shift-1 {
+  0%   { opacity: 0.7; clip-path: inset(10% 0 60% 0); transform: translate(-2px, -1px); }
+  25%  { opacity: 0.6; clip-path: inset(40% 0 20% 0); transform: translate(2px, 1px); }
+  50%  { opacity: 0.8; clip-path: inset(60% 0 5% 0);  transform: translate(-1px, 2px); }
+  75%  { opacity: 0.5; clip-path: inset(5% 0 80% 0);  transform: translate(1px, -1px); }
+  100% { opacity: 0;   clip-path: inset(0);            transform: translate(0); }
+}
+
+@keyframes glitch-shift-2 {
+  0%   { opacity: 0.6; clip-path: inset(50% 0 10% 0); transform: translate(2px, 1px); }
+  25%  { opacity: 0.7; clip-path: inset(15% 0 55% 0); transform: translate(-2px, -1px); }
+  50%  { opacity: 0.5; clip-path: inset(70% 0 0% 0);  transform: translate(1px, -2px); }
+  75%  { opacity: 0.8; clip-path: inset(0% 0 70% 0);  transform: translate(-1px, 1px); }
+  100% { opacity: 0;   clip-path: inset(0);            transform: translate(0); }
 }
 
 /* Reduced motion */
