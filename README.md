@@ -2,8 +2,7 @@
 
 ## Integrantes
 
-- [Nome do integrante 1]
-- [Nome do integrante 2]
+- [Marcio Ribeiro Julião](https://github.com/Marcio-Juliao)
 
 ## Sobre o produto
 
@@ -27,7 +26,7 @@ A ideia surgiu da necessidade de criar uma landing page para um produto com iden
 - **React 19** + **TypeScript 5.7** — framework e tipagem
 - **Vite 8** — build tool e dev server
 - **Tailwind CSS v4** — estilização utilitária
-- **OpenCode (Claude)** — assistente de IA para desenvolvimento e refactorização
+- **OpenCode (MiMo V2.5 Free)** — Modelo da Xiaomi assistente de IA para desenvolvimento e refatoração
 - **VS Code** — editor de código
 - **Figma** — referência de design (via plugin Figma Make)
 - **GitHub** — versionamento e entrega
