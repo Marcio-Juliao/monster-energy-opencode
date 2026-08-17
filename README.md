@@ -40,7 +40,6 @@ A ideia surgiu da necessidade de criar uma landing page para um produto com iden
 - **Efeitos visuais:** A IA implementou efeitos de parallax, partículas canvas, glitch text, scroll reveal e tilt 3D nos cards
 - **Análise de performance:** A IA identificou problemas de performance (backdrop-filter, box-shadow animation, canvas sem pausa) e sugeriu correções
 - **Correções de design:** Quando o resultado visual não ficou bom (cursor personalizado, glitch feio), a IA fez as correções solicitadas
-- **Decisões onde NÃO seguimos a IA:** Mantivemos o produto como Monster Energy (marca real) quando a atividade pedia produto fictício — decidimos tratar como "fictício para fins acadêmicos"
 
 ### Evolução da solução
 
