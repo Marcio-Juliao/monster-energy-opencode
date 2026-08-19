@@ -72,10 +72,10 @@ export default function StoryPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#080808] via-[#080808]/50 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-16 w-full">
-          <p style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }} className="text-xs tracking-[0.4em] mb-4 uppercase" style={{ animation: 'reveal-up 0.6s ease-out 0.1s both' }}>
+          <p style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)', animation: 'reveal-up 0.6s ease-out 0.1s both' }} className="text-xs tracking-[0.4em] mb-4 uppercase">
             EST. 2002
           </p>
-          <h1 style={{ fontFamily: 'var(--font-display)', lineHeight: 0.9 }} className="text-[clamp(3.5rem,12vw,9rem)] uppercase text-white leading-none" style={{ animation: 'reveal-up 0.6s ease-out 0.2s both' }}>
+          <h1 style={{ fontFamily: 'var(--font-display)', lineHeight: 0.9, animation: 'reveal-up 0.6s ease-out 0.2s both' }} className="text-[clamp(3.5rem,12vw,9rem)] uppercase text-white leading-none">
             THIS IS<br /><span style={{ color: 'var(--primary)' }}>MONSTER</span>
           </h1>
         </div>

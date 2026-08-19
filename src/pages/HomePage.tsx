@@ -21,7 +21,7 @@ function AnimatedCounter({ value, label }: { value: string; label: string }) {
   )
 }
 
-export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
+export default function HomePage({ setPage, onViewProduct }: { setPage: (p: Page) => void; onViewProduct: (id: number) => void }) {
   const featured = PRODUCTS.filter(p => p.tag !== null).slice(0, 4)
   const parallaxOffset = useParallax(0.3)
   const { ref: featuredRef, inView: featuredInView } = useInView(0.1)
@@ -60,16 +60,14 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
         <div className="relative z-10 max-w-7xl mx-auto px-6 pb-16 w-full">
           <div className="max-w-3xl">
             <p
-              style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }}
-              className="text-sm font-700 tracking-[0.3em] mb-4 uppercase"
               style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)', animation: 'reveal-up 0.8s ease-out 0.2s both' }}
+              className="text-sm font-700 tracking-[0.3em] mb-4 uppercase"
             >
               NEW SEASON DROP
             </p>
             <h1
-              style={{ fontFamily: 'var(--font-display)', lineHeight: 0.9 }}
-              className="text-[clamp(4rem,14vw,11rem)] uppercase text-white mb-6 leading-none"
               style={{ fontFamily: 'var(--font-display)', lineHeight: 0.9, animation: 'reveal-up 0.8s ease-out 0.4s both' }}
+              className="text-[clamp(4rem,14vw,11rem)] uppercase text-white mb-6 leading-none"
             >
               <GlitchText text="UNLEASH" className="block" /><br />
               <span className="text-stroke" style={{ color: 'var(--primary)' }}>
@@ -80,9 +78,8 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
               </span>
             </h1>
             <p
-              style={{ fontFamily: 'var(--font-condensed)' }}
-              className="text-lg text-[var(--muted-foreground)] font-400 max-w-md mb-8 tracking-wide leading-relaxed"
               style={{ fontFamily: 'var(--font-condensed)', animation: 'reveal-up 0.8s ease-out 0.6s both' }}
+              className="text-lg text-[var(--muted-foreground)] font-400 max-w-md mb-8 tracking-wide leading-relaxed"
             >
               Official Monster Energy drinks. Built for those who push the limit.
               No apologies. No limits.
@@ -152,7 +149,7 @@ export default function HomePage({ setPage }: { setPage: (p: Page) => void }) {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-px bg-[var(--border)]">
           {featured.map((p, i) => (
-            <ProductCard key={p.id} product={p} onClick={() => setPage('shop')} index={i} />
+            <ProductCard key={p.id} product={p} onViewProduct={onViewProduct} index={i} />
           ))}
         </div>
       </section>

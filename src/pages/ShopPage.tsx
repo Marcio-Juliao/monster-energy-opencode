@@ -4,7 +4,7 @@ import { PRODUCTS, CATEGORIES } from '@/data/products'
 import ProductCard from '@/components/ProductCard'
 import { useParallax } from '@/hooks/useParallax'
 
-export default function ShopPage() {
+export default function ShopPage({ onViewProduct }: { onViewProduct: (id: number) => void }) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [sortBy, setSortBy] = useState<SortOption>('default')
   const [filterKey, setFilterKey] = useState(0)
@@ -45,16 +45,14 @@ export default function ShopPage() {
         </div>
         <div className="max-w-7xl mx-auto relative z-10">
           <p
-            style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)' }}
-            className="text-xs tracking-[0.3em] mb-3 uppercase"
             style={{ fontFamily: 'var(--font-condensed)', color: 'var(--primary)', animation: 'reveal-up 0.6s ease-out 0.1s both' }}
+            className="text-xs tracking-[0.3em] mb-3 uppercase"
           >
             ENERGY DRINKS
           </p>
           <h1
-            style={{ fontFamily: 'var(--font-display)' }}
-            className="text-6xl md:text-8xl uppercase text-white leading-none"
             style={{ fontFamily: 'var(--font-display)', animation: 'reveal-up 0.6s ease-out 0.2s both' }}
+            className="text-6xl md:text-8xl uppercase text-white leading-none"
           >
             THE VAULT
           </h1>
@@ -73,7 +71,7 @@ export default function ShopPage() {
                   background: activeCategory === cat ? categoryColors[cat] : 'transparent',
                   borderColor: activeCategory === cat ? categoryColors[cat] : 'var(--border)',
                   color: activeCategory === cat
-                    ? (cat === 'ultra' || cat === 'zero' || cat === 'rehab' ? '#000' : '#fff')
+                    ? (cat === 'ultra' || cat === 'zero' ? '#000' : '#fff')
                     : 'var(--muted-foreground)',
                   animation: `reveal-up 0.4s ease-out ${i * 0.05}s both`,
                 }}
@@ -107,7 +105,7 @@ export default function ShopPage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px bg-[var(--border)]" key={filterKey}>
           {filtered.map((p, i) => (
-            <ProductCard key={p.id} product={p} onClick={() => {}} index={i} />
+            <ProductCard key={p.id} product={p} onViewProduct={onViewProduct} index={i} />
           ))}
         </div>
 

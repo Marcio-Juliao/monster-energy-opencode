@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react'
 import type { Page } from '@/types'
+import { useCart } from '@/context/CartContext'
 import MonsterLogo from './MonsterLogo'
 
 export default function Nav({ page, setPage }: { page: Page; setPage: (p: Page) => void }) {
+  const { totalItems } = useCart()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -56,8 +58,11 @@ export default function Nav({ page, setPage }: { page: Page; setPage: (p: Page) 
         </div>
 
         <div className="hidden md:flex items-center gap-4">
-          <button className="text-xs tracking-widest text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors font-600">
-            CART (0)
+          <button
+            onClick={() => setPage('cart')}
+            className="text-xs tracking-widest text-[var(--muted-foreground)] hover:text-[var(--primary)] transition-colors font-600"
+          >
+            CART ({totalItems})
           </button>
           <button
             onClick={() => setPage('shop')}

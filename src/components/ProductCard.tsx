@@ -1,11 +1,21 @@
 import { useState } from 'react'
 import type { Product } from '@/types'
+import { useCart } from '@/context/CartContext'
 import NutritionBadge from './NutritionBadge'
 import { useTilt } from '@/hooks/useTilt'
 
-export default function ProductCard({ product, onClick, index = 0 }: { product: Product; onClick: () => void; index?: number }) {
+export default function ProductCard({ product, onViewProduct, index = 0 }: { product: Product; onViewProduct: (id: number) => void; index?: number }) {
   const [hovered, setHovered] = useState(false)
+  const [addedFeedback, setAddedFeedback] = useState(false)
   const { ref, handleMouseMove, handleMouseLeave, tiltStyle } = useTilt(12)
+  const { addItem } = useCart()
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    addItem(product)
+    setAddedFeedback(true)
+    setTimeout(() => setAddedFeedback(false), 1500)
+  }
 
   return (
     <div
@@ -16,9 +26,9 @@ export default function ProductCard({ product, onClick, index = 0 }: { product: 
         animation: `stagger-in 0.6s ease-out ${index * 0.1}s both`,
       }}
       onMouseEnter={() => setHovered(true)}
-      onMouseLeave={(e) => { setHovered(false); handleMouseLeave(e) }}
+      onMouseLeave={() => { setHovered(false); handleMouseLeave() }}
       onMouseMove={handleMouseMove}
-      onClick={onClick}
+      onClick={() => onViewProduct(product.id)}
     >
       {/* Shine sweep overlay */}
       <div className="absolute inset-0 z-20 pointer-events-none overflow-hidden">
@@ -77,15 +87,19 @@ export default function ProductCard({ product, onClick, index = 0 }: { product: 
 
         {/* Add to cart overlay */}
         <div
-          className={`absolute inset-x-0 bottom-0 bg-[var(--primary)] py-3 text-center transition-transform duration-400 ${
+          className={`absolute inset-x-0 bottom-0 py-3 text-center transition-transform duration-400 z-30 ${
             hovered ? 'translate-y-0' : 'translate-y-full'
           }`}
+          style={{
+            background: addedFeedback ? '#39FF14' : 'var(--primary)',
+          }}
+          onClick={handleAddToCart}
         >
           <span
             style={{ fontFamily: 'var(--font-condensed)' }}
             className="text-xs font-700 tracking-widest text-[#080808]"
           >
-            ADD TO CART
+            {addedFeedback ? 'ADDED!' : 'ADD TO CART'}
           </span>
         </div>
       </div>

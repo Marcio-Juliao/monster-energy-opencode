@@ -1,4 +1,4 @@
-export type Page = 'home' | 'shop' | 'story'
+export type Page = 'home' | 'shop' | 'story' | 'product' | 'cart' | 'checkout'
 
 export type Product = {
   id: number
@@ -15,3 +15,10 @@ export type Product = {
 }
 
 export type SortOption = 'default' | 'price-asc' | 'price-desc' | 'caffeine'
+
+export type CartItem = {
+  product: Product
+  quantity: number
+}
+
+export type CheckoutStep = 'shipping' | 'payment' | 'confirmation'
